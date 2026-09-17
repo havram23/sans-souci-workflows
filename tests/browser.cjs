@@ -40,8 +40,11 @@ async function screenshot(name){await page.screenshot({path:path.join(evidence,n
  check('Search survives URL reload',await page.locator('#search').inputValue()==='Kalender'&&await page.locator('[data-starter]:visible').count()===1);
  await page.locator('[data-starter]:visible a').click();
  check('Detail page has one heading',await page.locator('h1').count()===1);
+ await page.bringToFront();
  await page.locator('[data-copy]').click();
- check('Copy gives meaningful feedback',(await page.locator('.codebox [role=status]').innerText()).includes('kopiert'));
+ await page.waitForFunction(()=>document.querySelector('.codebox [role=status]').textContent.length>0);
+ const copyFeedback=await page.locator('.codebox [role=status]').innerText();
+ check('Copy gives meaningful feedback: '+copyFeedback,copyFeedback.includes('kopiert'));
  const command=await page.locator('#starter-command').innerText();
  check('Clipboard contains exact command',await page.evaluate(()=>navigator.clipboard.readText())===command);
  for(const theme of ['dark','light']){
