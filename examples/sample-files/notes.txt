@@ -1,0 +1,1 @@
+Synthetische Beispieldatei für eine lokale SHA-256-Inventur.

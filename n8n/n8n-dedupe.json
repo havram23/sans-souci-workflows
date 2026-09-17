@@ -1,0 +1,74 @@
+{
+  "name": "Sans Souci – n8n: Dubletten markieren",
+  "nodes": [
+    {
+      "id": "e23228ea-e117-5b88-84b5-de9b4e66b40b",
+      "name": "Manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        280
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "39d07853-87f9-5fba-8880-3eb6a0c97353",
+      "name": "Synthetische Beispiele",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        510,
+        280
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{\"json\": {\"id\": \"A-001\", \"company\": \"Beispiel Studio\", \"private_note\": \"synthetisch\"}}, {\"json\": {\"id\": \"a-001\", \"company\": \"Beispiel Studio\", \"private_note\": \"doppelter Export\"}}, {\"json\": {\"id\": \"\", \"company\": \"\", \"note\": \"=1+1\", \"amount\": -12}}];"
+      }
+    },
+    {
+      "id": "f0393ed6-4a56-5166-852e-ecf617eb6661",
+      "name": "Lokal verarbeiten",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        280
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const seen = new Map();\nreturn $input.all().map((item, index) => {\n  const key = typeof item.json.id === 'string' ? item.json.id.trim().toLocaleLowerCase('en-US') : '';\n  const first = key ? seen.get(key) : undefined;\n  if (key && first === undefined) seen.set(key, index);\n  return {json: {...item.json, duplicate: first !== undefined, first_input_index: first ?? index}, pairedItem: {item: index}};\n});\n"
+      }
+    }
+  ],
+  "connections": {
+    "Manuell starten": {
+      "main": [
+        [
+          {
+            "node": "Synthetische Beispiele",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthetische Beispiele": {
+      "main": [
+        [
+          {
+            "node": "Lokal verarbeiten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

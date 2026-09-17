@@ -1,0 +1,2 @@
+{"event_id":"demo-001","status":"success","duration_ms":230,"internal_note":"nur synthetisches Beispiel"}
+{"event_id":"demo-002","status":"failure","duration_ms":800,"internal_note":"dieses Feld wird beim Beispiel entfernt"}

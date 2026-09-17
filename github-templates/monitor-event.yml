@@ -1,0 +1,23 @@
+# Optional template: copy into .github/workflows/ only after configuring secrets.
+# A GitHub-hosted runner cannot reach a monitor bound to 127.0.0.1 on your computer.
+name: Send a deliberate monitor heartbeat
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+      - name: Send status metadata only
+        env:
+          PILOT_INGEST_URL: ${{ secrets.PILOT_INGEST_URL }}
+          PILOT_INGEST_TOKEN: ${{ secrets.PILOT_INGEST_TOKEN }}
+        run: python clients/monitor_event.py send --status heartbeat --code GITHUB_MANUAL_HEARTBEAT

@@ -1,0 +1,74 @@
+{
+  "name": "Sans Souci – n8n: Formelähnliche Texte markieren",
+  "nodes": [
+    {
+      "id": "40d39e1e-09f5-5c84-a849-a75be7a9ea1e",
+      "name": "Manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        280
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "939eea4d-8ea3-5393-bef5-cb3a96fc0168",
+      "name": "Synthetische Beispiele",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        510,
+        280
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{\"json\": {\"id\": \"A-001\", \"company\": \"Beispiel Studio\", \"private_note\": \"synthetisch\"}}, {\"json\": {\"id\": \"a-001\", \"company\": \"Beispiel Studio\", \"private_note\": \"doppelter Export\"}}, {\"json\": {\"id\": \"\", \"company\": \"\", \"note\": \"=1+1\", \"amount\": -12}}];"
+      }
+    },
+    {
+      "id": "944cb0c2-69ed-5905-963c-8bb44b98d1be",
+      "name": "Lokal verarbeiten",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        280
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const risky = value => /^[\\t\\r\\n]/.test(value) || /^[\\s]*[=+\\-@]/u.test(value);\nreturn $input.all().map((item, index) => ({\n  json: Object.fromEntries(Object.entries(item.json).map(([key, value]) => [key, typeof value === 'string' && risky(value) ? \"'\" + value : value])),\n  pairedItem: {item: index},\n}));\n"
+      }
+    }
+  ],
+  "connections": {
+    "Manuell starten": {
+      "main": [
+        [
+          {
+            "node": "Synthetische Beispiele",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthetische Beispiele": {
+      "main": [
+        [
+          {
+            "node": "Lokal verarbeiten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

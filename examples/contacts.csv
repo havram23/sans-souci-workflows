@@ -1,0 +1,6 @@
+id,company,email,city,note
+1001,Beispiel Studio,office@example.invalid,Wien,Erstkontakt
+1002,Demo Werkstatt,team@example.invalid,Graz,Bestandskunde
+1001,Beispiel Studio,OFFICE@example.invalid,Wien,Doppelter Export
+,Muster Betrieb,,Linz,Identifier noch zu prüfen
+,Muster Atelier,,Salzburg,Fehlende IDs getrennt erhalten

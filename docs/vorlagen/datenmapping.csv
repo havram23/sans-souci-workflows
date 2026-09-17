@@ -1,0 +1,4 @@
+source_field,target_field,type,required,transformation,example_synthetic,owner_role
+customer_id,external_id,string,yes,trim,EXAMPLE-001,process_owner
+company_name,organization_name,string,yes,trim,Example Studio,process_owner
+created_at,received_at,datetime,yes,convert timezone explicitly,2026-09-17T10:00:00+02:00,technical_owner

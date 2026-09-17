@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+output/
+runtime/
+.env
+.env.*
+!*.example
+*.sqlite*
+*.db
+evidence/
+site/downloads/
+dist/
+CHATVERLAUF.md
+*-LOCAL.md

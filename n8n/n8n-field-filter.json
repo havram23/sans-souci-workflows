@@ -1,0 +1,74 @@
+{
+  "name": "Sans Souci – n8n: Felder gezielt weitergeben",
+  "nodes": [
+    {
+      "id": "5605e2d0-be18-5ff7-9732-376f122212da",
+      "name": "Manuell starten",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        280
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "787c8e29-2a82-5d8b-ba6b-482ea3b27690",
+      "name": "Synthetische Beispiele",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        510,
+        280
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{\"json\": {\"id\": \"A-001\", \"company\": \"Beispiel Studio\", \"private_note\": \"synthetisch\"}}, {\"json\": {\"id\": \"a-001\", \"company\": \"Beispiel Studio\", \"private_note\": \"doppelter Export\"}}, {\"json\": {\"id\": \"\", \"company\": \"\", \"note\": \"=1+1\", \"amount\": -12}}];"
+      }
+    },
+    {
+      "id": "adc0cfe6-da02-50cc-8d68-de1605d4528e",
+      "name": "Lokal verarbeiten",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        760,
+        280
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const allowed = ['id', 'company'];\nreturn $input.all().map((item, index) => ({\n  json: Object.fromEntries(allowed.filter(field => Object.hasOwn(item.json, field)).map(field => [field, item.json[field]])),\n  pairedItem: {item: index},\n}));\n"
+      }
+    }
+  ],
+  "connections": {
+    "Manuell starten": {
+      "main": [
+        [
+          {
+            "node": "Synthetische Beispiele",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthetische Beispiele": {
+      "main": [
+        [
+          {
+            "node": "Lokal verarbeiten",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}
