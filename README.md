@@ -18,7 +18,7 @@ Das Ergebnis liegt in `output/audit.json`. Die Beispieldaten sind synthetisch. V
 
 ## Bibliothek
 
-Die vollständige Liste mit Einstieg, Ergebnis und Grenzen steht in [docs/KATALOG.md](docs/KATALOG.md). Jeder Starter hat eine eigene Anleitung in `docs/starters/`. Die Website in `site/` ist für die zusätzliche Route `https://sans-souci.at/gratis-workflows/` vorbereitet.
+Die vollständige Liste mit Einstieg, Ergebnis und Grenzen steht in [docs/KATALOG.md](docs/KATALOG.md). Jeder Starter hat eine eigene Anleitung in `docs/starters/`. Die [öffentliche Workflow-Bibliothek auf sans-souci.at](https://sans-souci.at/gratis-workflows/) bietet alle 15 Starter mit Suche, Anleitungen und direkten Downloads. Das [Gesamtpaket als ZIP](https://sans-souci.at/gratis-workflows/downloads/all-starters.zip) ist ohne Registrierung verfügbar. Die statischen Website-Quellen liegen in `site/`.
 
 - **10 Python-Werkzeuge:** CSV-Qualitätscheck, Dublettenbereinigung, Spaltenmapping, Formelwertschutz, JSONL-Feldfilter, JSON-Pflichtfelder, UTM-Links, ICS-Kalenderexport, SHA-256-Inventur und Manifestprüfung.
 - **1 Monitor-Client:** expliziter Statusversand, Wiederholungen und lokale Warteschlange ohne gespeicherte Zugangsdaten.
